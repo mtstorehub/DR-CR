@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>Redraft Trial Balance</title>
+	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+	<link rel='stylesheet prefetch' href='https://unpkg.com/material-components-web@0.8.0/dist/material-components-web.min.css'>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=yes">
+	<link rel="stylesheet" type="text/css" href="asset/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="asset/css/ui-components.css" />
+	<link rel="stylesheet" type="text/css" href="asset/css/style.css" />
+	<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css'/>
+
+
+</head>
+
+<body ng-controller="StoreController">
+	
+	<nav class="navbar navbar-default" role="navigation">
+
+		<div class="navbar-header">					
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+			data-target="#navbar-collapse">
+			<span class="sr-only">Toggle navigation</span>			
+			<span class="glyphicon glyphicon-folder-open"></span>
+			</button>
+		<label class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">QUESTIONS</label>
+		<a class="navbar-brand" data-toggle="modal"  data-target="#myModal">Documentation Note</a>
+		</div>
+		<div class="collapse navbar-collapse" id="navbar-collapse">
+		<ul class="nav navbar-nav" ng-repeat="QUESTION in products">
+			<li><a class="nav-item" ng-class="{active:$index+1===QIndex}" ng-click = "setQuestionIndex($index+1)">QUESTION {{$index+1}}</a></li>
+		</ul>
+		</div>
+	</nav>
+	
+	<div>
+		<section></section>
+	</div>
+
+	<div  class="modal fade"  id="myModal"  tabindex="-1"  role="dialog"   aria-labelledby="myModalLabel"  aria-hidden="true"> 				<div  class="modal-dialog"> 
+		<div  class="modal-content"> 
+			<div  class="modal-header"> 
+				<button  type="button"  class="close"  data-dismiss="modal"   aria-hidden="true"> × </button> 
+				<span class="modal-title"  id="myModalLabel"> Debits and Credits </span> 
+			</div> 
+			<div  class="modal-body"> 
+				<table class="table modal-table">	
+					<thead>
+						<tr>
+							<th>Account Group</th>
+							<th>Nature</th>
+						</tr>
+						<tr>	
+							<td>Assets</td>
+							<td>Dr</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>	
+							<td>	Capital</td>
+							<td>	Cr</td>
+						</tr>
+						<tr>
+							<td>	Liabilities</td>
+							<td>	Cr</td>
+						</tr>
+						<tr>	
+							<th colspan="2">
+								<u>	Income</u>
+							</th>
+						</tr>
+						<tr>
+							<td>	&emsp;&#9632;&emsp;Commission Received</td>
+							<td>	Cr</td>
+						</tr>
+						<tr>
+							<td>	&emsp;&#9632;&emsp;Discount Rececived</td>
+							<td>	Cr</td>
+						</tr>
+						<tr>
+							<td>	&emsp;&#9632;&emsp;Interest Received</td>
+							<td>	Cr</td>
+						</tr>
+						<tr>
+							<td>	&emsp;&#9632;&emsp;Income for bad debt</td>
+							<td>	Cr</td>
+						</tr>
+						<tr>	
+							<th colspan="2">
+								<u>	Expenses</u>
+							</th>
+						</tr>
+						<tr>
+							<td>	&emsp;&#9632;&emsp;Discount Allowed</td>
+							<td>	Dr</td>
+						</tr>
+						<tr>
+							<td>	&emsp;&#9632;&emsp;Carriage inward/outward</td>
+							<td>	Dr</td>
+						</tr>
+						<tr>
+							<td>	&emsp;&#9632;&emsp;Bad Debts</td>
+							<td>	Dr</td>
+						</tr>
+						<tr>
+							<td>	&emsp;&#9632;&emsp;Rent, Wages, Stagionay, Insurance etc...</td>
+							<td>	Dr</td>
+						</tr>
+						<tr>
+							<td>Drawing</td>
+							<td>Dr</td>
+						</tr>
+						<tr>
+							<td>Sales</td>
+							<td>Cr</td>
+						</tr>
+						<tr>
+							<td>Purchase</td>
+							<td>Dr</td>
+						</tr>
+						<tr>
+							<td>Return in</td>
+							<td>Dr</td>
+						</tr>
+						<tr>
+							<td>Return out</td>
+							<td>Cr</td>
+						</tr>
+						<tr>
+							<td>Depreciation</td>
+							<td>Dr</td>
+						</tr>
+						<tr>
+							<td>Accumulated depreciation</td>
+							<td>Cr</td>
+						</tr>	
+					</tbody>
+				</table> 
+			</div> 
+			<div  class="modal-footer"> 
+				<button  type="button"  class="dc-button mdc-button--raised"   data-dismiss="modal"> Close </button> 
+			</div> 
+		</div><!--  /.modal-content  --> 
+	</div><!--  /.modal-dialog  --> 
+	</div>
+	
+	<div class="table-responsive">
+		 <table class="table table-hover">
+		 <caption ng-show="isCheckClicked(false)" >REDRAFT THE TRIAL BALANCE TO SHOW THE CORRECT ENTRIES</caption>
+		 <caption ng-show="isCheckClicked(true)">Solution Trial Balance</caption>
+			 <thead>
+			 	<tr>
+				 <td class="acc-title">Account Name</td>
+				 <td class="acc-title">Cost</td> 
+			 	</tr>
+			 </thead>
+			 <tbody ng-if = "isCheckClicked(false)" class="mdc-component mdc-component__buttons">
+				<tr ng-repeat="product in products[currentQuestion]">
+					<td class="acc-name" ng-init="defineData(product.name, product.mode, product.cost)">{{product.name}}</td>
+					<td>
+						<div ng-init="mode=product.mode">
+							<button class="btnChoice" ng-class="{active:mode===DR}" ng-click="mode=DR;updateData($index,1)">DR</button>
+    						<button class="btnChoice" ng-class="{active:mode===CR}" ng-click="mode=CR;updateData($index,2)">CR</button>
+    						<span class="label label-pill">${{product.cost}}</span>
+						</div>
+					</td>				
+				</tr>
+				<tr class="mdc-component__containers__primary">
+					<td colspan="2" style="border:0;"><button type="button" id="btnCheck" class="mdc-button mdc-button--raised" ng-click="clickCheck(true)">Check Solution</button>
+						
+					</td>
+				</tr>
+			 </tbody>
+			 <!-- solution table -->
+			 <tbody ng-if="isCheckClicked(true)" class="mdc-component mdc-component__buttons">			 
+			 	<tr ng-repeat="user_record in UserActionArr">
+			 		<td>{{user_record.name}}</td>
+			 		<td>
+			 			<div ng-init="mode=user_record.mode">
+							<button class="btnChoice" ng-class="{right:user_record.state && mode == DR,wrong:!user_record.state && mode == DR}">DR</button>
+    						<button class="btnChoice" ng-class="{right:user_record.state && mode == CR,wrong:!user_record.state && mode == CR}">CR</button>
+    						<span class="label label-pill">${{user_record.cost}}</span>
+						</div>				
+			 		</td>				
+			 	</tr>
+			 	<tr>
+			 		<td>
+			 			<button type="button" class="mdc-button mdc-button--raised" ng-click="resetPage()">Restart</button>
+			 		</td>			 		
+			 		<td>			 						
+			 			<button type="button" class="btn-primary mdc-button mdc-button--raised" ng-click="setNextQuestionIndex()" ng-if="isAllRight()" style="margin-right: 0px;">Next >></button>		
+			 			<button type="button" class="btn-warning mdc-button mdc-button--raised" ng-click="setNextQuestionIndex()" ng-if="!isAllRight()" style="margin-right: 0px;">Next >></button>	 						
+			 			<span class="label label-primary label-outlined" ng-show="isAllRight()">{{getTotalAmount(DR)}} = {{getTotalAmount(CR)}}</span>
+			 			<span class="label label-danger label-outlined" ng-show="!isAllRight()">{{getTotalAmount(DR)}} &ne; {{getTotalAmount(CR)}}</span>
+			 		</td>
+			 		
+			 	</tr>
+			 </tbody>
+		 </table>	
+		 {{QIndex}}
+		<!--  Ques:
+		 {{products}} -->
+		 <!-- <hr>
+		 User Action
+		 {{UserActionArr}}
+		 <hr>
+		 {{QIndex}} -->
+
+	</div>
+
+
+<script type="text/javascript" src="asset/js/angular.js"></script>	
+<script type="text/javascript" src="asset/js/ui-components.js"></script>
+<script type="text/javascript" src="asset/bin/redraft-app.js"></script>
+<script src="asset/js/jquery.js"></script>
+<script src="asset/js/bootstrapv3.2.min.js"></script> 
+<script src='https://unpkg.com/material-components-web@0.8.0/dist/material-components-web.min.js'></script>
+ <script>
+
+ 	$(document).ready(function () {
+  $(".navbar-nav li a").click(function(event) {
+    $(".navbar-collapse").collapse('hide');
+  });
+});
+
+ </script>
+</body>
+</html>
