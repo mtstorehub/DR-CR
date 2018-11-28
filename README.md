@@ -1,3 +1,8 @@
-UCSY second year 205 (accounting) subject Debit/Credit Choose app
-/* Authorized by MT (BTT founder) 
-contact me: myatthu2018@ucsy.edu.mm */
+# UCSY second year 205 (accounting) Debit/Credit Checker Web App
+  ### *(Build with AngularJS)*
+  * Developed by MT (BTT Founder)
+  * contact me: myat.thu@yomabank.com
+
+[Click to Download](https://github.com/mtstorehub/DR-CR/tree/master/dist/demo.zip)
+	
+![Screenshot](https://github.com/mtstorehub/DR-CR/tree/master/dist/ss.PNG)
